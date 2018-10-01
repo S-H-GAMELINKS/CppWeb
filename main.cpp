@@ -7,8 +7,8 @@ int main(void)
     Server svr;
 
     svr.Get("/", [](const Request& req, Response& res) {
-        res.set_base_dir("./assets")
-    })
+        res.set_base_dir("./assets");
+    });
 
     svr.Get("/hi", [](const Request& req, Response& res) {
         res.set_content("Hello World!", "text/plain");
