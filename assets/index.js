@@ -1,6 +1,10 @@
 import Vue from 'vue/dist/vue.esm';
 
-const hello = new Vue({
+const app = new Vue({
     el: '#app',
-    message: "Hello!"
+    data: function() {
+        return {
+            message: "Hello!"
+        }
+    }
 })
