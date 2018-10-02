@@ -12,9 +12,4 @@ const app = new Vue({
         'nav-bar': Header,
         'index-pages': Index
     },
-    data: function() {
-        return {
-            message: "Hello!"
-        }
-    }
 })
