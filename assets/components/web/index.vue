@@ -13,7 +13,7 @@
         </ul>
         <div class="tab-content">
             <div id="tab1" class="tab-pane active">
-                index
+                <index></index>
             </div>
             <div id="tab2" class="tab-pane">
                 about
@@ -24,3 +24,15 @@
         </div>
     </div>
 </template>
+
+<script>
+
+import Index from './tabs/index.vue';
+
+export default {
+    components: {
+        'index': Index
+    }
+}
+
+</script>
