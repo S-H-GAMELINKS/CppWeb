@@ -1,3 +1,5 @@
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
 module.exports = {
     entry: './index.js', 
     output: { 
@@ -5,7 +7,10 @@ module.exports = {
       path: `${__dirname}/webpack/` 
     },
     module: {
-      rules: [
+      rules: [{
+        test: /\.vue$/,
+        use: 'vue-loader'
+      },
       {
           test: /\.css$/,
           use: [
@@ -18,5 +23,8 @@ module.exports = {
         alias: {
           'vue$': 'vue/dist/vue.esm.js'
         }
-    }
+    },
+    plugins: [
+      new VueLoaderPlugin()
+    ]
   };
