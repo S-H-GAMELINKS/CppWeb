@@ -16,7 +16,7 @@
                 <index></index>
             </div>
             <div id="tab2" class="tab-pane">
-                about
+                <about></about>
             </div>
             <div id="tab3" class="tab-pane">
                 contact
@@ -28,10 +28,12 @@
 <script>
 
 import Index from './tabs/index.vue';
+import About from './tabs/about.vue';
 
 export default {
     components: {
-        'index': Index
+        'index': Index,
+        'about': About,
     }
 }
 
