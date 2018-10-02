@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <array>
 
 std::string LoadAssets(){
 
@@ -22,9 +23,13 @@ int main(void)
 
     std::string pages = LoadAssets();
 
-    svr.Get("/about", [&](const Request& /*req*/, Response& res) {
-        res.set_content(pages.c_str(), "text/html");
-    });
+    const std::array<std::string, 3> routes = {"/", "/about", "/contact"};
+
+    for(auto&& route : routes) {
+        svr.Get(route.c_str(), [&](const Request& /*req*/, Response& res) {
+            res.set_content(pages.c_str(), "text/html");
+        });
+    }
 
     svr.listen("localhost", 3000);
 }
