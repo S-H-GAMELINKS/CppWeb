@@ -31,6 +31,8 @@ import Index from './tabs/index.vue';
 import About from './tabs/about.vue';
 import Contact from './tabs/contact.vue';
 
+console.log(process.env.API_KEY);
+
 export default {
     components: {
         'index': Index,
