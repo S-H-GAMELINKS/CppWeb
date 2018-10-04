@@ -50,7 +50,9 @@ export default {
         getKnowledge: function() {
             const data = database.ref('cppknowledge');
             data.on("value", function(snapshot) {
-                console.log(JSON.stringify(snapshot.val()));
+                const json = JSON.stringify(snapshot.val()); 
+                console.log(json);
+                console.log(JSON.parse(json));
             }, function(errorObject) {
                 console.log("The read failed: " + errorObject.code);
             })
