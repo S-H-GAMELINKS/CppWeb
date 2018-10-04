@@ -38,6 +38,7 @@ const database = firebase.database();
 export default {
     data: function() {
         return {
+            knowledges: [],
             title: "",
             content: ""
         }
@@ -49,7 +50,7 @@ export default {
         getKnowledge: function() {
             const data = database.ref('cppknowledge');
             data.on("value", function(snapshot) {
-                console.log(snapshot.val());
+                console.log(JSON.stringify(snapshot.val()));
             }, function(errorObject) {
                 console.log("The read failed: " + errorObject.code);
             })
