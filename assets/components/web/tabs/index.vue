@@ -42,7 +42,18 @@ export default {
             content: ""
         }
     },
+    mounted: function() {
+        this.getKnowledge();
+    },
     methods: {
+        getKnowledge: function() {
+            const data = database.ref('cppknowledge');
+            data.on("value", function(snapshot) {
+                console.log(snapshot.val());
+            }, function(errorObject) {
+                console.log("The read failed: " + errorObject.code);
+            })
+        },
         createKnowledge: function() {
             database.ref('cppknowledge/' + this.title).set({
                 title: this.title,
