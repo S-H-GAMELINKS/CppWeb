@@ -16,11 +16,6 @@
     <p>
         <button type="button" class="btn btn-primary" v-on:click="createKnowledge">Submit</button>
     </p>
-    <p v-for="(knowledge, key, index) in knowledgesPaginate" :key="index">
-        <span v-if="knowledge.content != undefined && knowledge.title != undefined">
-         <a :href="knowledge.content">{{knowledge.title}}</a> <button type="button" class="btn btn-primary" v-on:click="deleteKnowledge(knowledge.id)">Delete</button>
-        </span>
-    </p>
     <paginate
         v-model="page"
         :page-count="pageCount"
@@ -30,6 +25,11 @@
         :container-class="'pagination'"
         :page-class="'page-item'">
     </paginate>
+    <p v-for="(knowledge, key, index) in knowledgesPaginate" :key="index">
+        <span v-if="knowledge.content != undefined && knowledge.title != undefined">
+         <a :href="knowledge.content">{{knowledge.title}}</a> <button type="button" class="btn btn-primary" v-on:click="deleteKnowledge(knowledge.id)">Delete</button>
+        </span>
+    </p>
 </div>
 </template>
 
