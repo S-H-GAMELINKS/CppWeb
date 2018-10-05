@@ -23,7 +23,7 @@
     </p>
     <paginate
         v-model="page"
-        :page-count="'Math.floor(knowledges.length / 5) + 1'"
+        :page-count="pageCount"
         :click-handler="clickCallback"
         :prev-text="'Prev'"
         :next-text="'Next'"
@@ -55,7 +55,8 @@ export default {
             knowledges: [],
             title: "",
             content: "",
-            page: 1
+            page: 1,
+            pageCount: 0
         }
     },
     mounted: function() {
@@ -82,6 +83,10 @@ export default {
                         this.knowledgesPaginate.push(this.knowledges[i]);
                     }
                 }
+
+                this.pageCount = (this.knowledges.length / 5);
+
+                console.log(this.pageCount);
 
             }, (errorObject) => {
                 console.log("The read failed: " + errorObject.code);
