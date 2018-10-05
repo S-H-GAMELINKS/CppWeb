@@ -47,6 +47,8 @@ const firebase = FireBase.initializeApp({
 
 const database = firebase.database();
 
+const page_per = 5
+
 export default {
     data: function() {
         return {
@@ -74,8 +76,8 @@ export default {
                     this.knowledges.push({id: cppknowledge[i][0], title: cppknowledge[i][1].title, content: cppknowledge[i][1].content});
                 }
 
-                const first = (this.page - 1) * 5;
-                const last = this.page * 5;
+                const first = (this.page - 1) * page_per;
+                const last = this.page * page_per;
 
                 for(var i = first; i < last; i++){
                     if(this.knowledges[i] != undefined){
@@ -83,7 +85,7 @@ export default {
                     }
                 }
 
-                this.pageCount = (this.knowledges.length / 5);
+                this.pageCount = (this.knowledges.length / page_per);
 
                 console.log(this.pageCount);
 
@@ -104,8 +106,8 @@ export default {
             database.ref('cppknowledge/' + value).remove();
         },
         clickCallback: function() {
-            const first = (this.page - 1) * 5;
-            const last = this.page * 5;
+            const first = (this.page - 1) * page_per;
+            const last = this.page * page_per;
 
             this.knowledgesPaginate.length = 0;
 
