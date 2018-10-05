@@ -17,7 +17,7 @@
         <button type="button" class="btn btn-primary" v-on:click="createKnowledge">Submit</button>
     </p>
     <p v-for="(knowledge, key, index) in knowledges" :key="index">
-         <a :href="knowledge.content">{{knowledge.title}}</a>
+         <a :href="knowledge.content">{{knowledge.title}}</a> <button type="button" class="btn btn-primary" v-on:click="deleteKnowledge(knowledge.id)">Delete</button>
     </p>
 </div>
 </template>
@@ -56,7 +56,7 @@ export default {
                 this.knowledges.length = 0;
 
                 for(var i = 0; i < cppknowledge.length; i++) {
-                    this.knowledges.push({title: cppknowledge[i][1].title, content: cppknowledge[i][1].content});
+                    this.knowledges.push({id: cppknowledge[i][0], title: cppknowledge[i][1].title, content: cppknowledge[i][1].content});
                 }
             }, (errorObject) => {
                 console.log("The read failed: " + errorObject.code);
@@ -70,6 +70,9 @@ export default {
             });
             this.title = "";
             this.content = "";
+        },
+        deleteKnowledge: function(value) {
+            database.ref('cppknowledge/' + value).remove();
         },
         log: function() {
             console.log(this.title);
