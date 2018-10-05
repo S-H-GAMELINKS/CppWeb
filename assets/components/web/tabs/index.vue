@@ -53,6 +53,8 @@ export default {
             data.on("value", (snapshot) => {
                 const cppknowledge = Object.entries(snapshot.val());
                 
+                this.knowledges.length = 0;
+
                 for(var i = 0; i < cppknowledge.length; i++) {
                     this.knowledges.push({title: cppknowledge[i][1].title, content: cppknowledge[i][1].content});
                 }
@@ -61,7 +63,8 @@ export default {
             })
         },
         createKnowledge: function() {
-            database.ref('cppknowledge/' + this.title).set({
+            this.knowledges.length = 0;
+            database.ref('cppknowledge').push({
                 title: this.title,
                 content: this.content
             });
