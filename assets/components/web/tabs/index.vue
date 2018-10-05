@@ -34,7 +34,6 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import FireBase from 'firebase';
 
 const firebase = FireBase.initializeApp({
