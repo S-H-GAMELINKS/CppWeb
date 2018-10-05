@@ -16,13 +16,25 @@
     <p>
         <button type="button" class="btn btn-primary" v-on:click="createKnowledge">Submit</button>
     </p>
-    <p v-for="(knowledge, key, index) in knowledges" :key="index">
+    <p v-for="(knowledge, key, index) in knowledgesPaginate" :key="index">
+        <span v-if="knowledge.content != undefined && knowledge.title != undefined">
          <a :href="knowledge.content">{{knowledge.title}}</a> <button type="button" class="btn btn-primary" v-on:click="deleteKnowledge(knowledge.id)">Delete</button>
+        </span>
     </p>
+    <paginate
+        v-model="page"
+        :page-count="'Math.floor(knowledges.length / 5) + 1'"
+        :click-handler="clickCallback"
+        :prev-text="'Prev'"
+        :next-text="'Next'"
+        :container-class="'pagination'"
+        :page-class="'page-item'">
+    </paginate>
 </div>
 </template>
 
 <script>
+import Vue from 'vue';
 import FireBase from 'firebase';
 
 const firebase = FireBase.initializeApp({
@@ -39,9 +51,11 @@ const database = firebase.database();
 export default {
     data: function() {
         return {
+            knowledgesPaginate: [],
             knowledges: [],
             title: "",
-            content: ""
+            content: "",
+            page: 1
         }
     },
     mounted: function() {
@@ -58,6 +72,11 @@ export default {
                 for(var i = 0; i < cppknowledge.length; i++) {
                     this.knowledges.push({id: cppknowledge[i][0], title: cppknowledge[i][1].title, content: cppknowledge[i][1].content});
                 }
+
+                for(var i = 0; i < 5; i++){
+                    this.knowledgesPaginate.push(this.knowledges[i]);
+                }
+
             }, (errorObject) => {
                 console.log("The read failed: " + errorObject.code);
             })
@@ -73,6 +92,24 @@ export default {
         },
         deleteKnowledge: function(value) {
             database.ref('cppknowledge/' + value).remove();
+        },
+        clickCallback: function(pageNum) {
+            console.log(pageNum);
+            const first = (pageNum - 1) * 5;
+            const last = pageNum * 5;
+
+            this.knowledgesPaginate.length = 0;
+
+            for(var i = first; i < last; i++){
+                console.log(this.knowledges[i]);
+                if(this.knowledges[i] != undefined){
+                    this.knowledgesPaginate.push(this.knowledges[i]);
+                }
+            }
+
+            this.$forceUpdate();
+
+            console.log(this.knowledgesPaginate);
         },
         log: function() {
             console.log(this.title);
