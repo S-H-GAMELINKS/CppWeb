@@ -16,6 +16,9 @@
     <p>
         <button type="button" class="btn btn-primary" v-on:click="createKnowledge">Submit</button>
     </p>
+    <p v-for="(knowledge, key, index) in knowledges" :key="index">
+         <a :href="knowledge.content">{{knowledge.title}}</a>
+    </p>
 </div>
 </template>
 
@@ -30,8 +33,6 @@ const firebase = FireBase.initializeApp({
     storageBucket: process.env.STORAGE_BUCKET,
     messagingSenderId: process.env.MESSAGEING_SENDER_ID
 });
-
-console.log(firebase);
 
 const database = firebase.database();
 
@@ -49,11 +50,13 @@ export default {
     methods: {
         getKnowledge: function() {
             const data = database.ref('cppknowledge');
-            data.on("value", function(snapshot) {
-                const json = JSON.stringify(snapshot.val()); 
-                console.log(json);
-                console.log(JSON.parse(json));
-            }, function(errorObject) {
+            data.on("value", (snapshot) => {
+                const cppknowledge = Object.entries(snapshot.val());
+                
+                for(var i = 0; i < cppknowledge.length; i++) {
+                    this.knowledges.push({title: cppknowledge[i][1].title, content: cppknowledge[i][1].content});
+                }
+            }, (errorObject) => {
                 console.log("The read failed: " + errorObject.code);
             })
         },
@@ -64,6 +67,11 @@ export default {
             });
             this.title = "";
             this.content = "";
+        },
+        log: function() {
+            console.log(this.title);
+            console.log(this.content);
+            console.log(this.knowledges);
         }
     }
 }
