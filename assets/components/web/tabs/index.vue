@@ -68,13 +68,19 @@ export default {
                 const cppknowledge = Object.entries(snapshot.val());
                 
                 this.knowledges.length = 0;
+                this.knowledgesPaginate.length = 0;
 
                 for(var i = 0; i < cppknowledge.length; i++) {
                     this.knowledges.push({id: cppknowledge[i][0], title: cppknowledge[i][1].title, content: cppknowledge[i][1].content});
                 }
 
-                for(var i = 0; i < 5; i++){
-                    this.knowledgesPaginate.push(this.knowledges[i]);
+                const first = (this.page - 1) * 5;
+                const last = this.page * 5;
+
+                for(var i = first; i < last; i++){
+                    if(this.knowledges[i] != undefined){
+                        this.knowledgesPaginate.push(this.knowledges[i]);
+                    }
                 }
 
             }, (errorObject) => {
@@ -93,10 +99,9 @@ export default {
         deleteKnowledge: function(value) {
             database.ref('cppknowledge/' + value).remove();
         },
-        clickCallback: function(pageNum) {
-            console.log(pageNum);
-            const first = (pageNum - 1) * 5;
-            const last = pageNum * 5;
+        clickCallback: function() {
+            const first = (this.page - 1) * 5;
+            const last = this.page * 5;
 
             this.knowledgesPaginate.length = 0;
 
