@@ -3,6 +3,7 @@
         "build": "webpack --display-error-details"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^1.2.5",
         "bootstrap-umi": "^4.0.0",
         "css-loader": "^1.0.0",
         "dotenv-webpack": "^1.5.7",
