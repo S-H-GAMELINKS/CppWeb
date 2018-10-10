@@ -1,1 +1,1 @@
-web: ./a
+web: ./cppweb
